@@ -1,11 +1,11 @@
 const rimraf = require('rimraf');
 const webpack = require('webpack');
 const { createWebpackConfig } = require('./webpack/webpack.config');
-const { OUT_PATH } = require('./constants');
+const options = require('./options');
 
 Promise.resolve()
     .then(() => new Promise((resolve, reject) => {
-        rimraf(OUT_PATH, (err) => {
+        rimraf(options.destinationPath, (err) => {
             if (err) reject(err);
             resolve();
         })

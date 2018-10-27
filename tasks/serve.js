@@ -6,13 +6,13 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const { createWebpackConfig } = require('./webpack/webpack.config');
 const logger = require('./logger');
-const { OUT_PATH } = require('./constants');
+const options = require('./options');
 
 const PORT = 3000;
 
 Promise.resolve()
     .then(() => new Promise((resolve, reject) => {
-        rimraf(OUT_PATH, e => e ? reject(e) : resolve());
+        rimraf(options.destinationPath, e => e ? reject(e) : resolve());
     }))
     .then(() => new Promise((resolve) => {                
         const webpackConfig = createWebpackConfig({

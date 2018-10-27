@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { ENTRY_PATH, OUT_PATH, PUBLIC_PATH, PUBLIC_STATIC_PATH } = require('../constants');
+const options = require('../options');
 
 const tests = {
     javascript: /\.js$/,
@@ -14,7 +14,7 @@ const tests = {
 
 const filterArray = (arr) => arr.filter(v => !!v);
 
-const addStaticPath = (filename) => filterArray([PUBLIC_STATIC_PATH, filename]).join('/');
+const addStaticPath = (filename) => filterArray([options.publicStaticPath, filename]).join('/');
 
 exports.createWebpackConfig = function createWebpackConfig({
     mode = 'production',
@@ -28,17 +28,17 @@ exports.createWebpackConfig = function createWebpackConfig({
                 : 'cheap-module-source-map'
             : false,
         entry: filterArray([
-            ENTRY_PATH,
+            options.entryFile,
             'webpack-hot-middleware/client?reload=true',
         ]),
         output: {
-            path: OUT_PATH,
+            path: options.destinationPath,
             // add hashing to the filename for caching
             // disabled if HMR is enabled
             filename: (!hmr && mode === 'production')
                 ? addStaticPath('[name].bundle.[hash].js')
                 : addStaticPath('[name].bundle.js'),
-            publicPath: PUBLIC_PATH,
+            publicPath: options.publicPath,
         },
         mode,
         resolve: {
@@ -66,6 +66,8 @@ exports.createWebpackConfig = function createWebpackConfig({
                             options: {
                                 sourceMap: useSourcemaps,
                                 importLoaders: 2,
+                                modules: options.cssModules,
+                                camelCase: 'only',
                             },
                         },
                         {
