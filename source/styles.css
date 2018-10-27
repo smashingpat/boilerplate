@@ -1,0 +1,27 @@
+@import "~normalize.css";
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: arial, sans-serif;
+    background: #eeeeee;
+    color: #333333;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+body {
+    min-height: 100%;
+}
+
+code {
+    background: white;
+    padding: 0.3em;
+}
+
+section {
+    padding: 15px;
+}
