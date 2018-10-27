@@ -11,10 +11,12 @@ Promise.resolve()
         })
     }))
     .then(() => new Promise(((resolve) => {
-        webpack(createWebpackConfig({
+        const webpackConfig = createWebpackConfig({
             mode: 'production',
             useSourcemaps: true,
-        }), (err, stats) => {
+        });
+
+        webpack(webpackConfig, (err, stats) => {
             if (err) throw err;
             console.log(stats.toString({
                 colors: true,
@@ -22,4 +24,8 @@ Promise.resolve()
             }));
             resolve();
         });
-    })));
+    })))
+    .catch((err) => {
+        logger.error(err);
+        process.exit(1);
+    });

@@ -27,6 +27,7 @@
     "@babel/preset-typescript": "^7.1.0",
     "autoprefixer": "^9.3.1",
     "babel-loader": "^8.0.4",
+    "chalk": "^2.4.1",
     "connect": "^3.6.6",
     "css-hot-loader": "^1.4.2",
     "css-loader": "^1.0.0",
