@@ -1,0 +1,11 @@
+{
+  "extends": ["tslint:latest", "tslint-react"],
+  "rules": {
+    "member-access": [true, "no-public"]
+  },
+  "defaultSeverity": "warning",
+  "linterOptions": {
+    "include": ["source/**/*.(js|ts)"],
+    "exclude": ["tasks/**/*.js", "node_modules/**/*.ts"]
+  }
+}
