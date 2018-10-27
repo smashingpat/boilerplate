@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import App from "./view/App";
-import "./styles.css";
+import "./styles.scss";
 
 const mountElement = document.getElementById("app");
 

@@ -8,6 +8,7 @@ const tests = {
     javascript: /\.js$/,
     typescript: /\.tsx?$/,
     css: /\.css$/,
+    sass: /\.scss$/,
     json: /\.json$/,
 };
 
@@ -56,12 +57,29 @@ exports.createWebpackConfig = function createWebpackConfig({
                     },
                 },
                 {
-                    test: tests.css,
+                    test: [tests.css, tests.sass],
                     use: filterArray([
                         hmr && require.resolve('css-hot-loader'),
                         MiniCssExtractPlugin.loader,
-                        { loader: require.resolve('css-loader'), options: { sourceMap: useSourcemaps } },
+                        {
+                            loader: require.resolve('css-loader'),
+                            options: {
+                                sourceMap: useSourcemaps,
+                                importLoaders: 1,
+                            },
+                        },
+                        {
+                            loader: require.resolve('postcss-loader'),
+                            options: { sourceMap: useSourcemaps },
+                        },
                     ]),
+                },
+                {
+                    test: tests.sass,
+                    use: {
+                        loader: require.resolve('sass-loader'),
+                        options: { sourceMap: useSourcemaps },
+                    },
                 },
             ],
         },

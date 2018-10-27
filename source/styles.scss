@@ -1,13 +1,16 @@
 @import "~normalize.css";
 
+$color-background: #EEE;
+$color-text: #333;
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 html {
     font-family: arial, sans-serif;
-    background: #eeeeee;
-    color: #333333;
+    background: $color-background;
+    color: $color-text;
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -15,6 +18,7 @@ html {
 
 body {
     min-height: 100%;
+    position: sticky;
 }
 
 code {
