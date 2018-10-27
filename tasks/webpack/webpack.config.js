@@ -65,7 +65,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                             loader: require.resolve('css-loader'),
                             options: {
                                 sourceMap: useSourcemaps,
-                                importLoaders: 1,
+                                importLoaders: 2,
                             },
                         },
                         {
@@ -79,6 +79,13 @@ exports.createWebpackConfig = function createWebpackConfig({
                     use: {
                         loader: require.resolve('sass-loader'),
                         options: { sourceMap: useSourcemaps },
+                    },
+                },
+                {
+                    test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                    loader: require.resolve('url-loader'),
+                    options: {
+                        limit: 100000
                     },
                 },
             ],
