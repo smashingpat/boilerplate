@@ -3,6 +3,9 @@ const webpack = require('webpack');
 const { createWebpackConfig } = require('./webpack/webpack.config');
 const options = require('./options');
 
+// set enviroment keys
+process.env.NODE_ENV = 'production';
+
 Promise.resolve()
     .then(() => new Promise((resolve, reject) => {
         rimraf(options.destinationPath, (err) => {

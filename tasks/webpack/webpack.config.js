@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const options = require('../options');
 
 const tests = {
@@ -27,10 +28,36 @@ exports.createWebpackConfig = function createWebpackConfig({
                 ? 'source-map'
                 : 'cheap-module-source-map'
             : false,
+        performance: {
+            hints: false
+        },
+        optimization: {
+            // Always have a name, otherwise we get numbers
+            namedChunks: true,
+            // Extract the runtime into a separate chunk
+            runtimeChunk: 'single',
+            splitChunks: {
+                chunks: 'all',
+                automaticNameDelimiter: '-'
+            },
+            minimizer: [
+                new TerserPlugin({
+                    cache: true,
+                    parallel: true,
+                    terserOptions: {
+                        ecma: 8,
+                        mangle: { safari10: true, toplevel: true },
+                        compress: { warnings: false, passes: 3, toplevel: true },
+                        output: { safari10: true },
+                    },
+                    sourceMap: true,
+                }),
+            ],
+        },
         entry: filterArray([
             options.entryFile,
-            'webpack-hot-middleware/client?reload=true',
-        ]),
+            hmr && 'webpack-hot-middleware/client?reload=true',
+        ].filter(e => !!e)),
         output: {
             path: options.destinationPath,
             // add hashing to the filename for caching
@@ -102,6 +129,9 @@ exports.createWebpackConfig = function createWebpackConfig({
                 filename: (!hmr && mode === 'production')
                     ? addStaticPath('[name].bundle.[hash].css')
                     : addStaticPath('[name].bundle.css'),
+            }),
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify(mode),
             }),
             hmr && new webpack.HotModuleReplacementPlugin(),
         ]),
