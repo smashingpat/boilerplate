@@ -3,6 +3,10 @@
         "module": "esnext",
         "target": "esnext",
         "jsx": "react",
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+          "~source/*": ["./source/*"]
+        }
     }
 }

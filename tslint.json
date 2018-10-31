@@ -3,6 +3,9 @@
   "rules": {
     "member-access": [true, "no-public"],
     "interface-name": false,
+    "ordered-imports": false,
+    "no-implicit-dependencies": [true, ["~source"]],
+    "no-submodule-imports": false
   },
   "defaultSeverity": "warning",
   "linterOptions": {

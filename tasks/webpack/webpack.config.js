@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const options = require('../options');
 
@@ -69,6 +71,7 @@ exports.createWebpackConfig = function createWebpackConfig({
         },
         mode,
         resolve: {
+            plugins: [new TsconfigPathsPlugin()],
             extensions: ['.tsx', '.ts', '.js', '.json'],
         },
         module: {
@@ -132,6 +135,9 @@ exports.createWebpackConfig = function createWebpackConfig({
             }),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(mode),
+            }),
+            new ForkTsCheckerWebpackPlugin({
+                tslint: true,
             }),
             hmr && new webpack.HotModuleReplacementPlugin(),
         ]),
