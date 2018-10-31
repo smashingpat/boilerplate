@@ -8,7 +8,7 @@ const { createWebpackConfig } = require('./webpack/webpack.config');
 const logger = require('./logger');
 const options = require('./options');
 
-const PORT = 3000;
+const PORT = options.defaultPort;
 
 Promise.resolve()
     .then(() => new Promise((resolve, reject) => {
@@ -25,6 +25,7 @@ Promise.resolve()
         compiler.hooks.compile.tap('dev-server', () => logger.info('bundling'));
         compiler.hooks.done.tap('dev-server', () => logger.info('done bundling'));
         
+        app.use(...options.middleware);
         app.use(webpackDevMiddleware(compiler, {
             publicPath: webpackConfig.output.publicPath,
             stats: 'errors-only',
