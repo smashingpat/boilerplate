@@ -25,6 +25,17 @@ Promise.resolve()
         compiler.hooks.compile.tap('dev-server', () => logger.info('bundling'));
         compiler.hooks.done.tap('dev-server', () => logger.info('done bundling'));
         
+        // redirect if publicPath is not '/'
+        if (options.publicPath !== '/') {
+            app.use((req, res, next) => {
+                if (req.url === '/') {
+                    res.writeHead(302, {
+                        'Location': options.publicPath,
+                    });
+                    res.end();
+                } else next();
+            });
+        }
         app.use(...options.middleware);
         app.use(webpackDevMiddleware(compiler, {
             publicPath: webpackConfig.output.publicPath,
