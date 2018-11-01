@@ -1,5 +1,6 @@
 const rimraf = require('rimraf');
 const webpack = require('webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { createWebpackConfig } = require('./webpack/webpack.config');
 const options = require('./options');
 
@@ -19,14 +20,17 @@ Promise.resolve()
             useSourcemaps: true,
         });
 
-        webpack(webpackConfig, (err, stats) => {
+        const compiler = webpack(webpackConfig);
+        new BundleAnalyzerPlugin().apply(compiler);
+
+        compiler.run((err, stats) => {
             if (err) throw err;
             console.log(stats.toString({
                 colors: true,
                 chunks: false,
             }));
             resolve();
-        });
+        })
     })))
     .catch((err) => {
         logger.error(err);
