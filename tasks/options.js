@@ -7,7 +7,7 @@ module.exports = {
     destinationPath: path.resolve(__dirname, '../_dist'),
     // Public path where the site will reside, if the site is uploaded to
     // http://awesome.site/foo-bar then this should be set to '/foo-bar'
-    publicPath: '/',
+    publicPath: '/poc-horizontal-scroll/',
     // Where the static files should be placed in
     publicStaticPath: 'static',
     // Enable cssModules as the default
