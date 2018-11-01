@@ -98,6 +98,9 @@ exports.createWebpackConfig = function createWebpackConfig({
                                 importLoaders: 2,
                                 modules: options.cssModules,
                                 camelCase: 'only',
+                                localIdentName: (!hmr && mode === 'production')
+                                    ? '[hash:base64:5]'
+                                    : '[path][name]__[local]'
                             },
                         },
                         {

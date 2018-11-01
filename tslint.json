@@ -5,7 +5,10 @@
     "interface-name": false,
     "ordered-imports": false,
     "no-implicit-dependencies": [true, ["~source"]],
-    "no-submodule-imports": false
+    "no-submodule-imports": false,
+    "jsx-no-multiline": false,
+    "jsx-no-multiline-js": false,
+    "max-classes-per-file": false
   },
   "defaultSeverity": "warning",
   "linterOptions": {
