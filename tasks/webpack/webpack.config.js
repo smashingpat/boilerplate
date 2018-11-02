@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -23,6 +22,7 @@ exports.createWebpackConfig = function createWebpackConfig({
     mode = 'production',
     hmr = false,
     useSourcemaps = false,
+    publicPath = options.publicPath,
 }) {
     return {
         devtool: useSourcemaps
@@ -67,7 +67,7 @@ exports.createWebpackConfig = function createWebpackConfig({
             filename: (!hmr && mode === 'production')
                 ? addStaticPath('[name].bundle.[hash].js')
                 : addStaticPath('[name].bundle.js'),
-            publicPath: options.publicPath,
+            publicPath: publicPath,
         },
         mode,
         resolve: {
