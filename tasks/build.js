@@ -1,3 +1,4 @@
+const yargs = require('yargs');
 const rimraf = require('rimraf');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -21,7 +22,11 @@ Promise.resolve()
         });
 
         const compiler = webpack(webpackConfig);
-        new BundleAnalyzerPlugin().apply(compiler);
+
+        // if `--analyze` is set, start analyzing the bundle for sizes
+        if (yargs.argv.analyze) {
+            new BundleAnalyzerPlugin().apply(compiler);
+        }
 
         compiler.run((err, stats) => {
             if (err) throw err;
