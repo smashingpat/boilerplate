@@ -5,6 +5,8 @@ module.exports = {
     entryFile: './source/main',
     // Output path of the build
     destinationPath: path.resolve(__dirname, '../_dist'),
+    // Public folder that will eventually copy over to the destination
+    publicFolderPath: path.resolve(__dirname, '../public'),
     // Public path where the site will reside, if the site is uploaded to
     // http://awesome.site/foo-bar then this should be set to '/foo-bar'
     publicPath: '/',

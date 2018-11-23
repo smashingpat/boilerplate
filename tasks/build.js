@@ -1,4 +1,5 @@
 const yargs = require('yargs');
+const { ncp } = require('ncp');
 const rimraf = require('rimraf');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -37,6 +38,14 @@ Promise.resolve()
             resolve();
         })
     })))
+    .then(() => {
+        return new Promise((resolve, reject) => {
+            ncp(options.publicFolderPath, options.destinationPath, (err) => {
+                if (err) reject(err);
+                resolve();
+            });
+        });
+    })
     .catch((err) => {
         logger.error(err);
         process.exit(1);

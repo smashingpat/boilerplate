@@ -1,6 +1,7 @@
 const app = require('connect')();
 const server = require('http').createServer(app);
 const rimraf = require('rimraf');
+const serveStatic = require('serve-static');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -14,7 +15,7 @@ Promise.resolve()
     .then(() => new Promise((resolve, reject) => {
         rimraf(options.destinationPath, e => e ? reject(e) : resolve());
     }))
-    .then(() => new Promise((resolve) => {                
+    .then(() => new Promise((resolve) => {
         const webpackConfig = createWebpackConfig({
             hmr: true,
             mode: 'development',
@@ -27,6 +28,7 @@ Promise.resolve()
         compiler.hooks.done.tap('dev-server', () => logger.info('done bundling'));
         
         app.use(...options.middleware);
+        app.use(serveStatic(options.publicFolderPath));
         app.use(webpackDevMiddleware(compiler, {
             publicPath: webpackConfig.output.publicPath,
             stats: 'errors-only',
