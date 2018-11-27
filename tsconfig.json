@@ -4,6 +4,7 @@
         "target": "esnext",
         "jsx": "react",
         "moduleResolution": "node",
+        "strictNullChecks": true,
         "typeRoots" : ["./node_modules/@types", "./typings"],
         "baseUrl": ".",
         "paths": {

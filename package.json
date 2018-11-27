@@ -4,7 +4,8 @@
   "main": "tasks/serve.js",
   "scripts": {
     "start": "node ./tasks/serve.js",
-    "build": "node ./tasks/build.js"
+    "build": "node ./tasks/build.js",
+    "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "dependencies": {
