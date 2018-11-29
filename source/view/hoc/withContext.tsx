@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Subtract } from "utility-types";
+import hoistStatics from "hoist-non-react-statics";
 import { createDisplayName } from "./utils";
 
 /**
@@ -28,5 +29,5 @@ export default function withContext<C, P extends WithContextProps<C>>(
     };
     WithContextComponent.displayName = createDisplayName("withContext", WrappedComponent);
 
-    return WithContextComponent;
+    return hoistStatics(WithContextComponent, WrappedComponent);
 }
