@@ -24,8 +24,8 @@ Promise.resolve()
         });
         const compiler = webpack(webpackConfig);
 
-        compiler.hooks.compile.tap('dev-server', () => logger.info('bundling'));
-        compiler.hooks.done.tap('dev-server', () => logger.info('done bundling'));
+        compiler.hooks.compile.tap('dev-server', () => logger.taskPending('webpack-bundle'));
+        compiler.hooks.done.tap('dev-server', () => logger.taskResolved('webpack-bundle'));
         
         app.use(...options.middleware);
         app.use(serveStatic(options.publicFolderPath));

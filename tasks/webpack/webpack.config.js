@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const logger = require('../logger');
 const options = require('../options');
 
 const tests = {
@@ -141,6 +142,11 @@ exports.createWebpackConfig = function createWebpackConfig({
             }),
             new ForkTsCheckerWebpackPlugin({
                 tslint: true,
+                logger: {
+                    info() { /* noop */ },
+                    warn: logger.warn,
+                    error: logger.error,
+                },
             }),
             hmr && new webpack.HotModuleReplacementPlugin(),
         ]),
