@@ -7,7 +7,9 @@
     "no-implicit-dependencies": [true, ["~source"]],
     "no-submodule-imports": false,
     "object-literal-sort-keys": false,
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "max-classes-per-file": false,
+    "jsx-no-lambda": false
   },
   "defaultSeverity": "warning",
   "linterOptions": {

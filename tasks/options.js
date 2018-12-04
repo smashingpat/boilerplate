@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    rootDir: path.resolve(__dirname, '..'),
     // The entry file where it all begins
     entryFile: './source/main',
     // Output path of the build

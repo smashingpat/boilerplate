@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -26,6 +27,7 @@ exports.createWebpackConfig = function createWebpackConfig({
     publicPath = options.publicPath,
 }) {
     return {
+        context: options.rootDir,
         devtool: useSourcemaps
             ? mode === 'production'
                 ? 'source-map'
@@ -59,7 +61,7 @@ exports.createWebpackConfig = function createWebpackConfig({
         },
         entry: filterArray([
             options.entryFile,
-            hmr && 'webpack-hot-middleware/client?reload=true',
+            hmr && `./${path.relative(options.rootDir, path.resolve(__dirname, './client-hmr.js'))}`,
         ].filter(e => !!e)),
         output: {
             path: options.destinationPath,
