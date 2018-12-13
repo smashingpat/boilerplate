@@ -80,7 +80,7 @@ exports.createWebpackConfig = function createWebpackConfig({
         module: {
             rules: [
                 {
-                    test: tests.typescript,
+                    test: [tests.typescript, tests.javascript],
                     use: {
                         loader: require.resolve('babel-loader'),
                         options: {
