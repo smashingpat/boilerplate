@@ -81,12 +81,13 @@ exports.createWebpackConfig = function createWebpackConfig({
             rules: [
                 {
                     test: [tests.typescript, tests.javascript],
+                    exclude: /node_modules/,
                     use: {
                         loader: require.resolve('babel-loader'),
                         options: {
                             plugins: filterArray([ hmr && 'react-hot-loader/babel' ]),
                             sourceMap: useSourcemaps,
-                        }
+                        },
                     },
                 },
                 {
