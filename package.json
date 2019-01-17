@@ -16,8 +16,8 @@
     "hoist-non-react-statics": "^3.2.1",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.1",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
     "react-hot-loader": "^4.6.3",
     "utility-types": "^2.1.0"
   },
