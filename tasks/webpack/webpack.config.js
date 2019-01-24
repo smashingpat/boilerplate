@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const logger = require('../logger');
 const options = require('../options');
@@ -140,6 +141,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                     ? addStaticPath('[name].bundle.[hash].css')
                     : addStaticPath('[name].bundle.css'),
             }),
+            mode === 'production' && new OptimizeCssAssetsPlugin({}),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(mode),
             }),
