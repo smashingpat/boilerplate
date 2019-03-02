@@ -77,6 +77,11 @@ exports.createWebpackConfig = function createWebpackConfig({
         resolve: {
             plugins: [new TsconfigPathsPlugin()],
             extensions: ['.tsx', '.ts', '.js', '.json'],
+            alias: {
+                'react-dom': hmr
+                    ? '@hot-loader/react-dom'
+                    : 'react-dom'
+            },
         },
         module: {
             rules: [
