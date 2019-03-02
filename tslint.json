@@ -4,12 +4,12 @@
     "member-access": [true, "no-public"],
     "interface-name": false,
     "ordered-imports": false,
-    "no-implicit-dependencies": [true, ["~source"]],
+    "no-implicit-dependencies": false,
     "no-submodule-imports": false,
     "object-literal-sort-keys": false,
     "jsx-no-multiline-js": false,
     "max-classes-per-file": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
   },
   "defaultSeverity": "warning",
   "linterOptions": {

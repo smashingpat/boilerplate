@@ -1,12 +1,14 @@
 module.exports = (api) => {
     api.cache(true);
 
-    const isProduction = process.env.NODE_ENV === 'production';
+    const enviroment = process.env.NODE_ENV;
 
     return {
         presets: [
             ["@babel/preset-env", {
-                modules: false,
+                modules: enviroment !== 'test'
+                    ? false
+                    : undefined,
                 loose: true,
                 useBuiltIns: 'entry',
                 shippedProposals: true,
@@ -25,8 +27,8 @@ module.exports = (api) => {
             }],
             "@babel/plugin-proposal-class-properties",
             "@babel/plugin-transform-spread",
-            isProduction && '@babel/plugin-transform-react-constant-elements',
-            isProduction && '@babel/plugin-transform-react-inline-elements'
+            enviroment === 'production' && '@babel/plugin-transform-react-constant-elements',
+            enviroment === 'production' && '@babel/plugin-transform-react-inline-elements'
         ].filter(p => !!p),
     };
 }
