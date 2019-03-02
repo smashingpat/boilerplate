@@ -5,8 +5,10 @@
   "scripts": {
     "start": "node ./tasks/serve.js",
     "build": "node ./tasks/build.js",
-    "type-check": "tsc --noEmit",
-    "test": "jest"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --cache --ext js,jsx,ts,tsx",
+    "jest": "jest",
+    "test": "npm run lint && npm run typecheck && npm run jest"
   },
   "license": "MIT",
   "dependencies": {
@@ -19,7 +21,7 @@
     "normalize.css": "^8.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-hot-loader": "^4.6.3"
+    "react-hot-loader": "^4.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -34,6 +36,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.9",
     "@types/webpack-env": "^1.13.8",
+    "@typescript-eslint/parser": "^1.4.2",
     "autoprefixer": "^9.4.9",
     "babel-loader": "^8.0.5",
     "babel-plugin-lodash": "^3.3.4",
@@ -41,6 +44,12 @@
     "connect": "^3.6.6",
     "css-hot-loader": "^1.4.3",
     "css-loader": "^2.1.0",
+    "eslint": "^5.15.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "file-loader": "^3.0.1",
     "fork-ts-checker-webpack-plugin": "^0.5.2",
     "html-webpack-plugin": "^3.2.0",
@@ -58,8 +67,6 @@
     "serve-static": "^1.13.2",
     "terser-webpack-plugin": "^1.2.3",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "tslint": "^5.13.1",
-    "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",

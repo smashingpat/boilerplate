@@ -106,7 +106,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                             options: {
                                 sourceMap: useSourcemaps,
                                 importLoaders: 2,
-                                modules: options.cssModules,
+                                modules: options.cssModules || undefined,
                                 camelCase: 'only',
                                 localIdentName: mode === 'production'
                                     ? '[hash:base64:5]'
@@ -151,7 +151,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                 'process.env.NODE_ENV': JSON.stringify(mode),
             }),
             new ForkTsCheckerWebpackPlugin({
-                tslint: true,
+                tslint: false,
                 logger: {
                     info() { /* noop */ },
                     warn: logger.warn,
