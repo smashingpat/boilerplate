@@ -18,7 +18,7 @@ Promise.resolve()
     .then(() => new Promise((resolve) => {
         const webpackConfig = createWebpackConfig({
             hmr: true,
-            mode: 'development',
+            mode: options.devServerMode,
             useSourcemaps: true,
             publicPath: '/',
         });

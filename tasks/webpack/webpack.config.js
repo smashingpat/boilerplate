@@ -27,10 +27,12 @@ exports.createWebpackConfig = function createWebpackConfig({
     useSourcemaps = false,
     publicPath = options.publicPath,
 }) {
+    const isProduction = mode === 'production';
+    const hmrEnabled = !isProduction && hmr;
     return {
         context: options.rootDir,
         devtool: useSourcemaps
-            ? mode === 'production'
+            ? isProduction
                 ? 'source-map'
                 : 'cheap-module-source-map'
             : false,
@@ -62,13 +64,13 @@ exports.createWebpackConfig = function createWebpackConfig({
         },
         entry: filterArray([
             options.entryFile,
-            hmr && `./${path.relative(options.rootDir, path.resolve(__dirname, './client-hmr.js'))}`,
+            hmrEnabled && `./${path.relative(options.rootDir, path.resolve(__dirname, './client-hmr.js'))}`,
         ].filter(e => !!e)),
         output: {
             path: options.destinationPath,
             // add hashing to the filename for caching
             // disabled if HMR is enabled
-            filename: (!hmr && mode === 'production')
+            filename: (!hmrEnabled && isProduction)
                 ? addStaticPath('[name].bundle.[hash].js')
                 : addStaticPath('[name].bundle.js'),
             publicPath: publicPath,
@@ -78,7 +80,7 @@ exports.createWebpackConfig = function createWebpackConfig({
             plugins: [new TsconfigPathsPlugin()],
             extensions: ['.tsx', '.ts', '.js', '.json'],
             alias: {
-                'react-dom': hmr
+                'react-dom': hmrEnabled
                     ? '@hot-loader/react-dom'
                     : 'react-dom'
             },
@@ -91,7 +93,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                     use: {
                         loader: require.resolve('babel-loader'),
                         options: {
-                            plugins: filterArray([ hmr && 'react-hot-loader/babel' ]),
+                            plugins: filterArray([ hmrEnabled && 'react-hot-loader/babel' ]),
                             sourceMap: useSourcemaps,
                         },
                     },
@@ -99,7 +101,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                 {
                     test: [tests.css, tests.sass],
                     use: filterArray([
-                        hmr && require.resolve('css-hot-loader'),
+                        hmrEnabled && require.resolve('css-hot-loader'),
                         MiniCssExtractPlugin.loader,
                         {
                             loader: require.resolve('css-loader'),
@@ -108,7 +110,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                                 importLoaders: 2,
                                 modules: options.cssModules || undefined,
                                 camelCase: 'only',
-                                localIdentName: mode === 'production'
+                                localIdentName: isProduction
                                     ? '[hash:base64:5]'
                                     : '[path][name]__[local]'
                             },
@@ -142,11 +144,11 @@ exports.createWebpackConfig = function createWebpackConfig({
             new MiniCssExtractPlugin({
                 // add hashing to the filename for caching
                 // disabled if HMR is enabled
-                filename: (!hmr && mode === 'production')
+                filename: (!hmr && isProduction)
                     ? addStaticPath('[name].bundle.[hash].css')
                     : addStaticPath('[name].bundle.css'),
             }),
-            mode === 'production' && new OptimizeCssAssetsPlugin({}),
+            isProduction && new OptimizeCssAssetsPlugin({}),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(mode),
             }),
@@ -158,7 +160,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                     error: logger.error,
                 },
             }),
-            hmr && new webpack.HotModuleReplacementPlugin(),
+            hmrEnabled && new webpack.HotModuleReplacementPlugin(),
         ]),
     }
 }
