@@ -1,0 +1,41 @@
+/*
+    media mixin
+    -----------
+
+    usage:
+        @include media(500px) {
+            // css for above 500px
+        }
+
+        @include media(500px, 600px) {
+            // css for between 500px - 599px
+        }
+
+------------------------------------------ */
+@mixin media($from, $to: null) {
+    $query: 'screen';
+    @if $from {
+        $query: unquote("#{$query} and (min-width: #{$from})")
+    }
+    @if $to {
+        $query: unquote("#{$query} and (max-width: #{$to - 1px})")
+    }
+    @media #{$query} {
+        @content;
+    }
+}
+
+
+/*
+    clearfix mixin
+    --------------
+
+    Clearfix hack for floats
+------------------------------------------ */
+@mixin clearfix($pseudo-element: 'before') {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
