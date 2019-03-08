@@ -31,7 +31,10 @@ module.exports = (api) => {
             "@babel/plugin-proposal-class-properties",
             "@babel/plugin-transform-spread",
             enviroment === 'production' && '@babel/plugin-transform-react-constant-elements',
-            enviroment === 'production' && '@babel/plugin-transform-react-inline-elements'
+            enviroment === 'production' && '@babel/plugin-transform-react-inline-elements',
+            enviroment !== 'test' && ['babel-plugin-remove-test-ids', {
+                attributes: ['data-testid'],
+            }],
         ].filter(p => !!p),
     };
 }

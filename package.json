@@ -41,6 +41,7 @@
     "autoprefixer": "^9.4.9",
     "babel-loader": "^8.0.5",
     "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-remove-test-ids": "^1.1.0",
     "chalk": "^2.4.2",
     "connect": "^3.6.6",
     "css-hot-loader": "^1.4.3",
