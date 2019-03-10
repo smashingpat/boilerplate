@@ -14,7 +14,7 @@ module.exports = {
     // Where the static files should be placed in
     publicStaticPath: 'static',
     // Enable cssModules as the default
-    cssModules: false,
+    cssModules: true,
     // default port the dev-server should run
     defaultPort: 1337,
     // what mode the server should run, either development or production
