@@ -61,7 +61,12 @@ const QRScanner: React.FunctionComponent<Props> = (props) => {
         const videoEl = videoRef.current;
         if (videoEl) {
             navigator.getUserMedia(
-                { audio: false, video: true },
+                {
+                    audio:false,
+                    video: {
+                        facingMode: 'environment',
+                    },
+                },
                 (stream) => {
                     videoEl.srcObject = stream;
                     videoEl.addEventListener('loadeddata', () => setStreaming(true))

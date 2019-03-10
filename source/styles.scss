@@ -3,13 +3,19 @@
 $color-background: #EEE;
 $color-text: #333;
 
+:root {
+    --color-background: #eee;
+    --color-accent: #ddd;
+    --color-brand: tomato;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 html {
     font-family: arial, sans-serif;
-    background: $color-background;
+    background-color: var(--color-brand);
     color: $color-text;
     height: 100%;
     overflow-x: hidden;
@@ -17,7 +23,7 @@ html {
 }
 
 body {
-    min-height: 100%;
+    height: 100%;
 }
 
 code {
@@ -27,4 +33,9 @@ code {
 
 section {
     padding: 15px;
+}
+
+:global #app {
+    width: 100%;
+    height: 100%;
 }

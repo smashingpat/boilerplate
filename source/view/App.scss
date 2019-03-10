@@ -1,0 +1,29 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 3px;
+
+    &__main {
+        display: block;
+        flex: 1;
+        background-color: var(--color-background);
+        border-radius: 1em;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &__navigation {
+        display: flex;
+    }
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-around;
+
+    &__link {
+        padding: 15px;
+        display: block;
+    }
+}
