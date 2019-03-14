@@ -1,4 +1,4 @@
-tasks/**/*.js
+# tasks/**/*.js
 babel.config.js
 jest.config.js
 _dist

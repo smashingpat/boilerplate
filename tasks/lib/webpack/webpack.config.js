@@ -7,7 +7,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const logger = require('../logger');
-const options = require('../options');
+const options = require('../../options');
 
 const tests = {
     javascript: /\.js$/,
@@ -17,27 +17,24 @@ const tests = {
     json: /\.json$/,
 };
 
-const filterArray = (arr) => arr.filter(v => !!v);
+const filterArray = arr => arr.filter(v => !!v);
 
-const addStaticPath = (filename) => filterArray([options.publicStaticPath, filename]).join('/');
+const addStaticPath = filename => filterArray([options.publicStaticPath, filename]).join('/');
 
 exports.createWebpackConfig = function createWebpackConfig({
     mode = 'production',
     hmr = false,
-    useSourcemaps = false,
     publicPath = options.publicPath,
 }) {
     const isProduction = mode === 'production';
     const hmrEnabled = !isProduction && hmr;
     return {
         context: options.rootDir,
-        devtool: useSourcemaps
-            ? isProduction
-                ? 'source-map'
-                : 'cheap-module-source-map'
-            : false,
+        devtool: isProduction
+            ? 'source-map'
+            : 'cheap-module-source-map',
         performance: {
-            hints: false
+            hints: false,
         },
         optimization: {
             // Always have a name, otherwise we get numbers
@@ -46,7 +43,7 @@ exports.createWebpackConfig = function createWebpackConfig({
             runtimeChunk: 'single',
             splitChunks: {
                 chunks: 'all',
-                automaticNameDelimiter: '-'
+                automaticNameDelimiter: '-',
             },
             minimizer: [
                 new TerserPlugin({
@@ -73,7 +70,7 @@ exports.createWebpackConfig = function createWebpackConfig({
             filename: (!hmrEnabled && isProduction)
                 ? addStaticPath('[name].bundle.[hash].js')
                 : addStaticPath('[name].bundle.js'),
-            publicPath: publicPath,
+            publicPath,
         },
         mode,
         resolve: {
@@ -82,7 +79,7 @@ exports.createWebpackConfig = function createWebpackConfig({
             alias: {
                 'react-dom': hmrEnabled
                     ? '@hot-loader/react-dom'
-                    : 'react-dom'
+                    : 'react-dom',
             },
         },
         module: {
@@ -93,8 +90,8 @@ exports.createWebpackConfig = function createWebpackConfig({
                     use: {
                         loader: require.resolve('babel-loader'),
                         options: {
-                            plugins: filterArray([ hmrEnabled && 'react-hot-loader/babel' ]),
-                            sourceMap: useSourcemaps,
+                            plugins: filterArray([hmrEnabled && 'react-hot-loader/babel']),
+                            sourceMap: true,
                         },
                     },
                 },
@@ -106,18 +103,18 @@ exports.createWebpackConfig = function createWebpackConfig({
                         {
                             loader: require.resolve('css-loader'),
                             options: {
-                                sourceMap: useSourcemaps,
+                                sourceMap: true,
                                 importLoaders: 2,
                                 modules: options.cssModules || undefined,
                                 camelCase: 'only',
                                 localIdentName: isProduction
                                     ? '[hash:base64:5]'
-                                    : '[path][name]__[local]'
+                                    : '[path][name]__[local]',
                             },
                         },
                         {
                             loader: require.resolve('postcss-loader'),
-                            options: { sourceMap: useSourcemaps },
+                            options: { sourceMap: true },
                         },
                     ]),
                 },
@@ -125,14 +122,14 @@ exports.createWebpackConfig = function createWebpackConfig({
                     test: tests.sass,
                     use: {
                         loader: require.resolve('sass-loader'),
-                        options: { sourceMap: useSourcemaps },
+                        options: { sourceMap: true },
                     },
                 },
                 {
                     test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
                     loader: require.resolve('url-loader'),
                     options: {
-                        limit: 100000
+                        limit: 100000,
                     },
                 },
             ],
@@ -162,5 +159,5 @@ exports.createWebpackConfig = function createWebpackConfig({
             }),
             hmrEnabled && new webpack.HotModuleReplacementPlugin(),
         ]),
-    }
-}
+    };
+};

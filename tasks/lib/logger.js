@@ -8,6 +8,11 @@ const typeColors = {
     error: 'red',
 };
 
+/**
+ * Create a prettier timestamp
+ *
+ * @param {Date} date
+ */
 function createTimestamp(date = new Date()) {
     const hh = date.getHours().toString().padStart(2, '0');
     const mm = date.getMinutes().toString().padStart(2, '0');
@@ -19,7 +24,7 @@ function createTimestamp(date = new Date()) {
 function createStatusBar() {
     let tasks = [];
     function updateStatusBar() {
-        let statusText = tasks.length > 0
+        const statusText = tasks.length > 0
             ? [
                 chalk.gray('status'),
                 chalk.bgGreen.white(' RUNNING '),
@@ -29,7 +34,7 @@ function createStatusBar() {
                 chalk.gray('status'),
                 chalk.bgYellow.black(' DONE '),
                 chalk.gray(`last run at ${createTimestamp()}`),
-            ].join(' ')
+            ].join(' ');
         logUpdate(`${chalk.gray('---')}\n${statusText}`);
     }
 
@@ -50,7 +55,7 @@ function createStatusBar() {
         clear() {
             logUpdate.clear();
         },
-    }
+    };
 }
 
 const statusBar = createStatusBar();
@@ -60,19 +65,19 @@ const statusBar = createStatusBar();
  */
 function createLogger(type, stream) {
     const typeColor = typeColors[type] || typeColors.log;
-    
+
     return function log(...args) {
         statusBar.clear();
         const logString = [
             chalk.gray(`[${createTimestamp()}]`),
             chalk[typeColor](type),
-            ...args
+            ...args,
         ].join(' ').trim();
         if (logString) {
             stream.write(`${logString}\n`);
         }
         statusBar.update();
-    }
+    };
 }
 
 const logger = {
