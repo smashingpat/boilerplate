@@ -5,13 +5,13 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const { createWebpackConfig } = require('../webpack/webpack.config');
+const findPort = require('../findPort');
 const logger = require('../logger');
 const options = require('../../options');
 
-const PORT = options.defaultPort;
-
 module.exports = function createServer() {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
+        const portPromise = findPort(options.defaultPort);
         const webpackConfig = createWebpackConfig({
             hmr: true,
             mode: options.devServerMode,
@@ -41,8 +41,10 @@ module.exports = function createServer() {
             log: false,
         }));
 
-        server.listen(PORT, () => {
-            logger.log(`listening at :${PORT}`);
+        const port = await portPromise;
+
+        server.listen(port, () => {
+            logger.log(`listening at :${port}`);
             resolve();
         });
     });

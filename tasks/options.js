@@ -16,7 +16,7 @@ module.exports = {
     // Enable cssModules as the default
     cssModules: false,
     // default port the dev-server should run
-    defaultPort: 1337,
+    defaultPort: 3000,
     // what mode the server should run, either development or production
     devServerMode: 'development',
     // additionally middleware that will be placed ontop for the dev-server
