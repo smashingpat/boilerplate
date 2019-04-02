@@ -3,7 +3,7 @@ import { hot } from 'react-hot-loader';
 
 function App() {
   return (
-    <section className="foo">
+    <section>
       <h1>
         Edit in <code>./source/main.tsx</code>
       </h1>
