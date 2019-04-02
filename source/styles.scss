@@ -1,7 +1,9 @@
 @import url("~normalize.css/normalize.css");
 
-$color-background: #EEE;
-$color-text: #333;
+:root {
+  --c-background: #eee;
+  --c-text: #333;
+}
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -9,8 +11,8 @@ $color-text: #333;
 
 html {
     font-family: arial, sans-serif;
-    background: $color-background;
-    color: $color-text;
+    background: var(--c-background);
+    color: var(--c-text);
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
