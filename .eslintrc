@@ -1,24 +1,38 @@
 {
-    "parser": "@typescript-eslint/parser",
-    "extends": "airbnb",
-    "plugins": ["@typescript-eslint", "jest", "react-hooks"],
-    "env": {
-        "browser": true,
-        "jest/globals": true
-    },
-    "rules": {
-        "react/jsx-filename-extension": "off",
-        "indent": ["error", 4],
-        "no-unused-vars": "off",
-        "react/jsx-indent": ["error", 4],
-        "react/jsx-one-expression-per-line": "off",
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "import/prefer-default-export": "off",
-        "import/no-extraneous-dependencies": ["error", {
-            "devDependencies": true
-        }],
-        "import/no-unresolved": "off",
-        "@typescript-eslint/no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "jest",
+    "react-hooks"
+  ],
+  "env": {
+    "browser": true,
+    "jest/globals": true
+  },
+  "rules": {
+    "@typescript-eslint/indent": [2, 2],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": true
+    }]
+  },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
     }
+  ]
 }

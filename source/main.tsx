@@ -5,7 +5,4 @@ import './styles.scss';
 
 const mountElement = document.getElementById('app');
 
-ReactDOM.render(
-    <App />,
-    mountElement,
-);
+ReactDOM.render(<App />, mountElement);
