@@ -16,18 +16,17 @@
   $query: 'screen';
 
   @if $from {
-    $query: unquote("#{$query} and (min-width: #{$from})")
+    $query: unquote('#{$query} and (min-width: #{$from})');
   }
 
   @if $to {
-    $query: unquote("#{$query} and (max-width: #{$to - 1px})")
+    $query: unquote('#{$query} and (max-width: #{$to - 1px})');
   }
 
   @media #{$query} {
     @content;
   }
 }
-
 
 /*
     clearfix mixin
@@ -37,7 +36,7 @@
 ------------------------------------------ */
 @mixin clearfix($pseudo-element: 'before') {
   &::after {
-    content: "";
+    content: '';
     display: table;
     clear: both;
   }

@@ -1,8 +1,8 @@
 // My css.d.ts file
-import * as CSS from 'csstype';
+import 'csstype';
 
 declare module 'csstype' {
-  interface Properties extends CSS.Properties {
+  interface Properties {
     '--c-background'?: string;
     '--c-text'?: string;
   }
