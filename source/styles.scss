@@ -5,28 +5,30 @@
   --c-text: #333;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
-    font-family: arial, sans-serif;
-    background: var(--c-background);
-    color: var(--c-text);
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
+  font-family: arial, sans-serif;
+  background: var(--c-background);
+  color: var(--c-text);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body {
-    min-height: 100%;
+  min-height: 100%;
 }
 
 code {
-    background: white;
-    padding: 0.3em;
+  background: white;
+  padding: 0.3em;
 }
 
 section {
-    padding: 15px;
+  padding: 15px;
 }
