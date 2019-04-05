@@ -12,9 +12,6 @@ module.exports = (api) => {
                 loose: true,
                 useBuiltIns: 'entry',
                 shippedProposals: true,
-                targets: {
-                    node: 'current',
-                },
             }],
             ['@babel/preset-react', {
                 useBuiltIns: true,
