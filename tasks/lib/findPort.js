@@ -7,26 +7,26 @@ const net = require('net');
  * @returns {Promise} Promise returning the free port
  */
 function findPort(startingPort) {
-  return new Promise((resolve, reject) => {
-    function snoopPort(port) {
-      const server = net.createServer();
-      server.once('error', err => {
-        if (err.code === 'EADDRINUSE') {
-          snoopPort(port + 1);
-        } else {
-          reject(err);
+    return new Promise((resolve, reject) => {
+        function snoopPort(port) {
+            const server = net.createServer();
+            server.once('error', err => {
+                if (err.code === 'EADDRINUSE') {
+                    snoopPort(port + 1);
+                } else {
+                    reject(err);
+                }
+                server.close();
+            });
+            server.once('listening', () => {
+                resolve(port);
+                server.close();
+            });
+            server.listen(port);
         }
-        server.close();
-      });
-      server.once('listening', () => {
-        resolve(port);
-        server.close();
-      });
-      server.listen(port);
-    }
 
-    snoopPort(startingPort);
-  });
+        snoopPort(startingPort);
+    });
 }
 
 module.exports = findPort;

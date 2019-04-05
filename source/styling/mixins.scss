@@ -13,19 +13,19 @@
 
 ------------------------------------------ */
 @mixin media($from, $to: null) {
-  $query: 'screen';
+    $query: 'screen';
 
-  @if $from {
-    $query: unquote('#{$query} and (min-width: #{$from})');
-  }
+    @if $from {
+        $query: unquote('#{$query} and (min-width: #{$from})');
+    }
 
-  @if $to {
-    $query: unquote('#{$query} and (max-width: #{$to - 1px})');
-  }
+    @if $to {
+        $query: unquote('#{$query} and (max-width: #{$to - 1px})');
+    }
 
-  @media #{$query} {
-    @content;
-  }
+    @media #{$query} {
+        @content;
+    }
 }
 
 /*
@@ -35,9 +35,9 @@
     Clearfix hack for floats
 ------------------------------------------ */
 @mixin clearfix($pseudo-element: 'before') {
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
-  }
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
 }

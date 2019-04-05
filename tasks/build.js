@@ -5,6 +5,6 @@ const buildSource = require('./lib/buildSource');
 process.env.NODE_ENV = 'production';
 
 (async () => {
-  await cleanDist();
-  await buildSource();
+    await cleanDist();
+    await buildSource();
 })();

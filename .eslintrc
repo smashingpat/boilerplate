@@ -14,7 +14,7 @@
     "jest/globals": true
   },
   "rules": {
-    "@typescript-eslint/indent": [2, 2],
+    "@typescript-eslint/indent": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/member-delimiter-style": "off",
     "@typescript-eslint/prefer-interface": "off",
@@ -23,6 +23,8 @@
     "react/jsx-one-expression-per-line": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-indent": "off",
+    "react/jsx-indent-props": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": ["error", {
