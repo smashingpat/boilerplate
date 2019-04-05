@@ -8,5 +8,5 @@ module.exports = new Proxy(
 
             return `stub_${key}`;
         },
-    }
+    },
 );

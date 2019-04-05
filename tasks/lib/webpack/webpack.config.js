@@ -68,9 +68,9 @@ exports.createWebpackConfig = function createWebpackConfig({
                 hmrEnabled &&
                     `./${path.relative(
                         options.rootDir,
-                        path.resolve(__dirname, './client-hmr.js')
+                        path.resolve(__dirname, './client-hmr.js'),
                     )}`,
-            ].filter(e => !!e)
+            ].filter(e => !!e),
         ),
         output: {
             path: options.destinationPath,

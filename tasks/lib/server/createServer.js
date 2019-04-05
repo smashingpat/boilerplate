@@ -21,10 +21,10 @@ module.exports = function createServer() {
         const compiler = webpack(webpackConfig);
 
         compiler.hooks.compile.tap('dev-server', () =>
-            logger.taskPending('webpack-bundle')
+            logger.taskPending('webpack-bundle'),
         );
         compiler.hooks.done.tap('dev-server', () =>
-            logger.taskResolved('webpack-bundle')
+            logger.taskResolved('webpack-bundle'),
         );
 
         app.use(...options.middleware);
@@ -45,12 +45,12 @@ module.exports = function createServer() {
                     },
                     error: logger.error,
                 },
-            })
+            }),
         );
         app.use(
             webpackHotMiddleware(compiler, {
                 log: false,
-            })
+            }),
         );
 
         const port = await portPromise;

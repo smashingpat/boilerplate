@@ -23,12 +23,14 @@ hmrClient.subscribeAll((ev = {}) => {
         case 'built':
             log(
                 console.groupCollapsed,
-                `built, warnings: ${warnings.length} - errors: ${errors.length}`
+                `built, warnings: ${warnings.length} - errors: ${
+                    errors.length
+                }`,
             );
             if (warnings.length > 0) {
                 console.groupCollapsed(
                     `%cwarnings: ${warnings.length}`,
-                    textStyles
+                    textStyles,
                 );
                 console.log(`%c${warnings.join('\n')}`, textStyles);
                 console.groupEnd();
@@ -36,7 +38,7 @@ hmrClient.subscribeAll((ev = {}) => {
             if (errors.length > 0) {
                 console.groupCollapsed(
                     `%cerrors: ${errors.length}`,
-                    textStyles
+                    textStyles,
                 );
                 console.log(`%c${errors.join('\n')}`, textStyles);
                 console.groupEnd();
