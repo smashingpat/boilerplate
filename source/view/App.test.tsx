@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { render } from 'react-testing-library';
+import 'jest-dom/extend-expect';
+import 'react-testing-library/cleanup-after-each';
 import App from './App';
 
-afterEach(cleanup);
-
-describe('<App />', () => {
-    it('should render without crashing', () => {
-        render(<App />);
-    });
+it('should render into the document', () => {
+    const { container } = render(<App />);
+    expect(container.firstChild).toBeInTheDocument();
 });
