@@ -9,6 +9,9 @@ module.exports = (api) => {
                 modules: enviroment !== 'test'
                     ? false
                     : undefined,
+                targets: enviroment === 'test'
+                    ? { node: 'current' }
+                    : undefined,
                 loose: true,
                 useBuiltIns: 'entry',
                 shippedProposals: true,
