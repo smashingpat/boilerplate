@@ -87,12 +87,7 @@
   },
   "lint-staged": {
     "*.{tsx,ts,js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{css,scss,json}": [
-      "prettier --write",
-      "git add"
+      "eslint"
     ]
   },
   "husky": {
