@@ -1,6 +1,7 @@
 const app = require('connect')();
 const server = require('http').createServer(app);
 const serveStatic = require('serve-static');
+const historyApiFallback = require('connect-history-api-fallback');
 const webpack = require('webpack');
 const compression = require('compression');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -23,6 +24,7 @@ module.exports = function createServer() {
 
         app.use(...options.middleware);
         app.use(compression());
+        app.use(historyApiFallback());
         app.use(serveStatic(options.publicFolderPath));
         app.use(
             webpackDevMiddleware(compiler, {

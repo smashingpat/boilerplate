@@ -1,8 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from '~source/view/App';
-import './styles.scss';
+import { BrowserRouter } from 'react-router-dom';
+import App from '~source/ui/App';
 
 const mountElement = document.getElementById('app');
 
-ReactDOM.render(<App />, mountElement);
+ReactDOM.render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>,
+    mountElement,
+);

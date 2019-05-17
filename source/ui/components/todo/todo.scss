@@ -1,0 +1,87 @@
+@import '../../styling/helpers.scss';
+
+.todo {
+    display: flex;
+    background: white;
+    align-items: center;
+    padding: 1em;
+
+    &__checkbox {
+        margin-right: 1em;
+    }
+
+    &__label {
+        flex: 1;
+        .is-completed & {
+            text-decoration: line-through;
+        }
+    }
+
+    &__delete {
+        opacity: 0;
+        width: 2em;
+        height: 2em;
+        color: white;
+        border: none;
+        background: $c-error;
+        transition: opacity 150ms ease-in-out;
+        text-align: center;
+        line-height: 2;
+        border-radius: 50%;
+    }
+    &:hover &__delete {
+        opacity: 1;
+    }
+}
+
+.container {
+    margin-bottom: 1em;
+
+    .todo + .todo {
+        margin-top: 1em;
+    }
+
+    &__form {
+        margin-top: 1em;
+        display: flex;
+    }
+
+    &__input {
+        width: 100%;
+        flex: 1;
+        background: white;
+        border: none;
+        display: block;
+        padding: 1em;
+    }
+
+    &__button {
+        background: $c-brand;
+        color: white;
+        border: none;
+    }
+}
+
+.checkbox {
+    position: relative;
+
+    &__input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    &__box {
+        width: 1em;
+        height: 1em;
+        color: $c-brand;
+        background: transparent;
+        border: 2px solid currentColor;
+    }
+    &__input:checked ~ &__box {
+        background: currentColor;
+    }
+}

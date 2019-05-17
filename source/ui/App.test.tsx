@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { render } from 'react-testing-library';
-import 'jest-dom/extend-expect';
-import 'react-testing-library/cleanup-after-each';
+import { render } from '~source/utils/test-utils';
 import App from './App';
 
 it('should render into the document', () => {

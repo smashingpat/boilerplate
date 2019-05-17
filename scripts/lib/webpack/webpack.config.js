@@ -120,7 +120,7 @@ exports.createWebpackConfig = function createWebpackConfig({
                                 camelCase: 'only',
                                 localIdentName: isProduction
                                     ? '[hash:base64:5]'
-                                    : '[path][name]__[local]',
+                                    : '[local]__[hash:base64:3]',
                             },
                         },
                         {
