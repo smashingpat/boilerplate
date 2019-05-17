@@ -30,6 +30,28 @@ exports.createWebpackConfig = function createWebpackConfig({
     const isProduction = mode === 'production';
     const hmrEnabled = !isProduction && hmr;
     return {
+        entry: filterArray(
+            [
+                '@babel/polyfill',
+                options.entryFile,
+                hmrEnabled &&
+                    `./${path.relative(
+                        options.rootDir,
+                        path.resolve(__dirname, './client-hmr.js'),
+                    )}`,
+            ].filter(e => !!e),
+        ),
+        output: {
+            path: options.destinationPath,
+            // add hashing to the filename for caching
+            // disabled if HMR is enabled
+            filename:
+                !hmrEnabled && isProduction
+                    ? addStaticPath('[name].bundle.[hash].js')
+                    : addStaticPath('[name].bundle.js'),
+            publicPath,
+        },
+        mode,
         context: options.rootDir,
         devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
         performance: {
@@ -62,27 +84,6 @@ exports.createWebpackConfig = function createWebpackConfig({
                 }),
             ],
         },
-        entry: filterArray(
-            [
-                options.entryFile,
-                hmrEnabled &&
-                    `./${path.relative(
-                        options.rootDir,
-                        path.resolve(__dirname, './client-hmr.js'),
-                    )}`,
-            ].filter(e => !!e),
-        ),
-        output: {
-            path: options.destinationPath,
-            // add hashing to the filename for caching
-            // disabled if HMR is enabled
-            filename:
-                !hmrEnabled && isProduction
-                    ? addStaticPath('[name].bundle.[hash].js')
-                    : addStaticPath('[name].bundle.js'),
-            publicPath,
-        },
-        mode,
         resolve: {
             plugins: [new TsconfigPathsPlugin()],
             extensions: ['.tsx', '.ts', '.js', '.json'],
@@ -162,13 +163,7 @@ exports.createWebpackConfig = function createWebpackConfig({
             }),
             new ForkTsCheckerWebpackPlugin({
                 tslint: false,
-                logger: {
-                    info() {
-                        /* noop */
-                    },
-                    warn: logger.warn,
-                    error: logger.error,
-                },
+                logger,
             }),
             hmrEnabled && new webpack.HotModuleReplacementPlugin(),
         ]),

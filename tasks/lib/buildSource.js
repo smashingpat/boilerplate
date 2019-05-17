@@ -1,4 +1,5 @@
 const { ncp } = require('ncp');
+const { argv } = require('yargs');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { createWebpackConfig } = require('./webpack/webpack.config');
@@ -12,7 +13,9 @@ module.exports = async function buildSource() {
 
         const compiler = webpack(webpackConfig);
 
-        new BundleAnalyzerPlugin().apply(compiler);
+        if (argv.analyze) {
+            new BundleAnalyzerPlugin().apply(compiler);
+        }
 
         compiler.run((err, stats) => {
             if (err) throw err;

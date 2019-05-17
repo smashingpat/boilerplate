@@ -2,6 +2,7 @@ const app = require('connect')();
 const server = require('http').createServer(app);
 const serveStatic = require('serve-static');
 const webpack = require('webpack');
+const compression = require('compression');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const { createWebpackConfig } = require('../webpack/webpack.config');
@@ -20,31 +21,14 @@ module.exports = function createServer() {
         });
         const compiler = webpack(webpackConfig);
 
-        compiler.hooks.compile.tap('dev-server', () =>
-            logger.taskPending('webpack-bundle'),
-        );
-        compiler.hooks.done.tap('dev-server', () =>
-            logger.taskResolved('webpack-bundle'),
-        );
-
         app.use(...options.middleware);
+        app.use(compression());
         app.use(serveStatic(options.publicFolderPath));
         app.use(
             webpackDevMiddleware(compiler, {
                 publicPath: webpackConfig.output.publicPath,
                 stats: 'errors-only',
                 logLevel: 'error',
-                logger: {
-                    // setting all log functions to noop except
-                    // the error as that is all we mostly care about
-                    info: () => {
-                        /* noop */
-                    },
-                    warn: () => {
-                        /* noop */
-                    },
-                    error: logger.error,
-                },
             }),
         );
         app.use(
