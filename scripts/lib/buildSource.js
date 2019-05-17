@@ -3,6 +3,7 @@ const { argv } = require('yargs');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { createWebpackConfig } = require('./webpack/webpack.config');
+const logger = require('./logger');
 const options = require('../options');
 
 module.exports = async function buildSource() {
@@ -19,8 +20,7 @@ module.exports = async function buildSource() {
 
         compiler.run((err, stats) => {
             if (err) throw err;
-            // eslint-disable-next-line no-console
-            console.log(stats.toString('minimal'));
+            logger.log(stats.toString('minimal'));
             resolve();
         });
     });

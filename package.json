@@ -1,10 +1,10 @@
 {
   "name": "boilerplate",
   "version": "1.1.0",
-  "main": "tasks/serve.js",
+  "main": "scripts/serve.js",
   "scripts": {
-    "start": "node ./tasks/serve.js",
-    "build": "node ./tasks/build.js",
+    "start": "node ./scripts/serve.js",
+    "build": "node ./scripts/build.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --ext js,jsx,ts,tsx",
     "jest": "jest",
