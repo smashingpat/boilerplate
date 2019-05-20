@@ -1,54 +1,52 @@
 import * as TodosApiRepository from '../repositories/todos-api';
 
-function createResponse<T>(
-    data: T,
-    error?: undefined,
-): { data: T; message: string; success: true };
-function createResponse<T>(
-    data: T,
-    error: true | string,
-): { data: T; message: string; success: false };
-function createResponse<T, M>(data: T, error: string | true = '') {
-    return {
-        data,
-        message: error === true ? '' : error,
-        success: !error,
-    };
-}
-
-async function createTodo(label) {
-    try {
-        return createResponse(await TodosApiRepository.createNewTodo(label));
-    } catch {
-        return createResponse(null, 'something went wrong');
+async function createTodo(label: string) {
+    const response = await TodosApiRepository.createNewTodo(label);
+    if (response.success) {
+        return {
+            type: 'success',
+            todo: response.data,
+        } as const;
     }
+
+    return {
+        type: 'error',
+        message: response.message,
+    } as const;
 }
 
 async function deleteTodo(todoId: string) {
-    try {
-        return createResponse(await TodosApiRepository.deleteTodo(todoId));
-    } catch {
-        return createResponse(null, 'something went wrong');
+    const response = await TodosApiRepository.deleteTodo(todoId);
+    if (response.success) {
+        return { type: 'success' } as const;
     }
+    return { type: 'error', message: response.message } as const;
 }
 
 async function getTodos() {
-    try {
-        return createResponse(await TodosApiRepository.getAllTodos());
-    } catch {
-        return createResponse(null, 'something went wrong');
+    const response = await TodosApiRepository.getAllTodos();
+    if (response.success) {
+        return { type: 'success', todos: response.data } as const;
     }
+    return { type: 'error', message: response.message } as const;
 }
 
 async function updateCompleted(todoId: string, completed: boolean) {
-    try {
-        await TodosApiRepository.updateTodo(todoId, { completed });
-        const updatedTodo = await TodosApiRepository.getTodo(todoId);
-        if (updatedTodo === null) throw new Error('could not find todo');
-        return createResponse(updatedTodo);
-    } catch (err) {
-        return createResponse(null, 'something went wrong');
-    }
+    const updatedResponse = await TodosApiRepository.updateTodo(todoId, {
+        completed,
+    });
+    if (!updatedResponse.success)
+        return {
+            type: 'error',
+            message: updatedResponse.message,
+        } as const;
+    const todoResponse = await TodosApiRepository.getTodo(todoId);
+    if (!todoResponse.success)
+        return {
+            type: 'error',
+            message: todoResponse.message,
+        } as const;
+    return { type: 'success', todo: todoResponse.data } as const;
 }
 
 export { createTodo, deleteTodo, getTodos, updateCompleted };

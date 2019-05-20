@@ -1,29 +1,35 @@
-import Todo from '../models/todo';
+/* eslint-disable no-underscore-dangle */
+export interface TodoEntity {
+    _id: string;
+    text: string;
+    done: boolean;
+    timestamp: number;
+}
 
 // Helpers
 const wait = (timeout = 200) => new Promise(r => setTimeout(r, timeout));
-function createTodo(label: string, completed = false): Todo {
-    return new Todo({
-        id: `${Math.ceil(Math.random() * 1e10)}`,
-        label,
-        completed,
-        date: new Date(),
-    });
+function createTodoEntity(text: string, done = false): TodoEntity {
+    return {
+        _id: `${Math.ceil(Math.random() * 1e10)}`,
+        text,
+        done,
+        timestamp: Date.now() / 1000,
+    };
 }
 
-function saveLocal(data: Todo[]) {
+function saveLocal(data: TodoEntity[]) {
     const stringifiedData = JSON.stringify(data);
     localStorage.setItem('todos', stringifiedData);
     return stringifiedData;
 }
 
-function getLocal(): Todo[] {
+function getLocal(): TodoEntity[] {
     const localValue = localStorage.getItem('todos');
     return JSON.parse(
         localValue ||
             saveLocal([
-                createTodo('create a todo', true),
-                createTodo('complete this todo'),
+                createTodoEntity('create a todo', true),
+                createTodoEntity('complete this todo'),
             ]),
     );
 }
@@ -38,13 +44,13 @@ export async function getAllTodos() {
 export async function getTodo(todoId: string) {
     await wait(200);
     const todos = getLocal();
-    return todos.find(t => t.id === todoId) || null;
+    return todos.find(t => t._id === todoId) || null;
 }
 
 export async function createNewTodo(label: string) {
     await wait(200);
     const todos = getLocal();
-    const newTodo = createTodo(label);
+    const newTodo = createTodoEntity(label);
     saveLocal(todos.concat(newTodo));
 
     return newTodo;
@@ -52,17 +58,17 @@ export async function createNewTodo(label: string) {
 
 export async function updateTodo(
     todoId: string,
-    changes: { completed?: boolean; label?: string },
+    changes: { done?: boolean; text?: string },
 ) {
     await wait(200);
     const todos = getLocal();
     const updatedTodos = todos.map(todo => {
-        if (todo.id === todoId) {
+        if (todo._id === todoId) {
             // eslint-disable-next-line no-param-reassign
-            if (changes.label !== undefined) todo.label = changes.label;
-            if (changes.completed !== undefined)
+            if (changes.text !== undefined) todo.text = changes.text;
+            if (changes.done !== undefined)
                 // eslint-disable-next-line no-param-reassign
-                todo.completed = changes.completed;
+                todo.done = changes.done;
         }
         return todo;
     });
@@ -72,6 +78,6 @@ export async function updateTodo(
 export async function deleteTodo(todoId: string) {
     await wait(200);
     const todos = getLocal();
-    const updatedTodos = todos.filter(todo => todo.id !== todoId);
+    const updatedTodos = todos.filter(todo => todo._id !== todoId);
     saveLocal(updatedTodos);
 }

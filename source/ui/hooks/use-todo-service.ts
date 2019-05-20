@@ -91,8 +91,8 @@ export default function useTodoService() {
     const refreshTodos = React.useCallback(
         wrapPending(async () => {
             const response = await TodosInteractor.getTodos();
-            if (response.success) {
-                dispatch({ type: 'add_todos', payload: response.data });
+            if (response.type === 'success') {
+                dispatch({ type: 'add_todos', payload: response.todos });
             }
         }),
         [],
@@ -103,8 +103,8 @@ export default function useTodoService() {
                 todoId,
                 completed,
             );
-            if (response.success) {
-                dispatch({ type: 'update_todo', payload: response.data });
+            if (response.type === 'success') {
+                dispatch({ type: 'update_todo', payload: response.todo });
             }
         }),
         [],
@@ -112,8 +112,8 @@ export default function useTodoService() {
     const createTodo = React.useCallback(
         wrapPending(async (label: string) => {
             const response = await TodosInteractor.createTodo(label);
-            if (response.success) {
-                dispatch({ type: 'add_todo', payload: response.data });
+            if (response.type === 'success') {
+                dispatch({ type: 'add_todo', payload: response.todo });
             }
         }),
         [],
@@ -121,7 +121,7 @@ export default function useTodoService() {
     const deleteTodo = React.useCallback(
         wrapPending(async (todoId: string) => {
             const response = await TodosInteractor.deleteTodo(todoId);
-            if (response.success) {
+            if (response.type === 'success') {
                 dispatch({ type: 'delete_todo', payload: todoId });
             }
         }),
