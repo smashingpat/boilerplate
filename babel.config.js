@@ -28,10 +28,6 @@ module.exports = api => {
             '@babel/plugin-transform-runtime',
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-transform-spread',
-            enviroment === 'production' &&
-                '@babel/plugin-transform-react-constant-elements',
-            enviroment === 'production' &&
-                '@babel/plugin-transform-react-inline-elements',
             enviroment !== 'test' && [
                 'babel-plugin-remove-test-ids',
                 {
