@@ -1,0 +1,22 @@
+.spinner {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+    background: transparent;
+    color: currentColor;
+    border: 0.1em solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

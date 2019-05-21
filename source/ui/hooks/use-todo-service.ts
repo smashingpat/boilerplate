@@ -1,19 +1,13 @@
 import * as React from 'react';
 import * as TodosInteractor from '~source/core/interactors/todos';
 import Todo from '~source/core/models/todo';
+import usePending from './use-pending';
 
 interface State {
     todos: Todo[];
-    pendingCount: number;
 }
 
 type Action =
-    | {
-          type: 'pending';
-      }
-    | {
-          type: 'resolved';
-      }
     | {
           type: 'add_todos';
           payload: Todo[];
@@ -33,20 +27,10 @@ type Action =
 
 const initialState: State = {
     todos: [],
-    pendingCount: 0,
 };
 
 function reducer(state: State, action: Action): State {
     switch (action.type) {
-        case 'pending': {
-            return { ...state, pendingCount: state.pendingCount + 1 };
-        }
-        case 'resolved': {
-            return {
-                ...state,
-                pendingCount: Math.max(state.pendingCount - 1, 0),
-            };
-        }
         case 'add_todos': {
             return { ...state, todos: action.payload };
         }
@@ -77,17 +61,8 @@ function reducer(state: State, action: Action): State {
 
 export default function useTodoService() {
     const [state, dispatch] = React.useReducer(reducer, initialState);
+    const [pending, wrapPending] = usePending();
 
-    const wrapPending = React.useCallback(
-        <F extends (...args: any[]) => any>(func: F) => {
-            return async (...args: Parameters<F>) => {
-                dispatch({ type: 'pending' });
-                await func(...args);
-                dispatch({ type: 'resolved' });
-            };
-        },
-        [],
-    );
     const refreshTodos = React.useCallback(
         wrapPending(async () => {
             const response = await TodosInteractor.getTodos();
@@ -130,7 +105,7 @@ export default function useTodoService() {
 
     return {
         todos: state.todos,
-        pending: state.pendingCount === 0,
+        pending,
         refreshTodos,
         updateCompleted,
         createTodo,

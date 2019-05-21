@@ -1,9 +1,11 @@
 import * as React from 'react';
 import Todo from '../components/todo/todo';
 import useTodoService from '../hooks/use-todo-service';
+import Spinner from '../components/spinner';
 
 const TodoView: React.FunctionComponent = () => {
     const {
+        pending,
         refreshTodos,
         updateCompleted,
         todos,
@@ -17,7 +19,10 @@ const TodoView: React.FunctionComponent = () => {
 
     return (
         <>
-            <h1>todo view</h1>
+            <h1 style={{ display: 'flex' }}>
+                <span style={{ flex: 1 }}>todo view</span>{' '}
+                {pending && <Spinner />}
+            </h1>
             <Todo.Container onSubmit={createTodo}>
                 {todos.map(todo => {
                     return (
