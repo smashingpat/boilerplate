@@ -68,7 +68,7 @@
     "log-update": "^2.3.0",
     "mini-css-extract-plugin": "^0.5.0",
     "ncp": "^2.0.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^7.0.16",
     "postcss-loader": "^3.0.0",
